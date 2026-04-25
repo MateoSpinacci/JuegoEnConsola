@@ -16,7 +16,7 @@ public class Mapa {
     private final ManagerJefes MB;
     private int piso;
     private int cantEnemigos;
-    private static int numDesdePisosJefe;
+    private static int numDesdePisosJefe = 0;
     private boolean tieneJefe;
 
     public Mapa(ManagerItems MI, ManagerEnemigos ME, ManagerJefes MB) {
