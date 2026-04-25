@@ -11,8 +11,6 @@ public class Combate {
 
     private final Random rand = new Random();
     private int danioProvocado;
-    private int turnos = 0;
-    private boolean etapaSinActivar = true;
 
     public boolean atacarJefe(MiniJefes minijefe, Jugador jugador) {
         if (!minijefe.isCarga() && rand.nextInt(100) < 5) {
@@ -33,22 +31,22 @@ public class Combate {
                 this.danioProvocado = minijefe.atacar(jugador, jugador.isDefendiendose(), false);
                 return false;
             case "BERSERKER":
-                if (turnos == 2) {
+                if (minijefe.getTurnos() == 2) {
                     minijefe.setAtaque(minijefe.getAtaque() + 5);
-                    turnos = 0;
+                    minijefe.setTurnos(0);
                     System.out.println(minijefe.getNombre() + " aumentó su ataque en 5");
                 } else {
-                    turnos++;
+                    minijefe.setTurnos(minijefe.getTurnos() + 1);
                 }
                 this.danioProvocado = minijefe.atacar(jugador, jugador.isDefendiendose(), false);
                 return false;
             case "REGENERADOR":
-                if (turnos == 2) {
+                if (minijefe.getTurnos() == 2) {
                     System.out.println(minijefe.getNombre() + " regenero " + (Math.min(5, (minijefe.getDefensaMax() - minijefe.getDefensa())) + " de escudo"));
                     minijefe.setDefensa(Math.min(minijefe.getDefensa() + 5, minijefe.getDefensaMax()));
-                    turnos = 0;
+                    minijefe.setTurnos(0);
                 } else {
-                    turnos++;
+                    minijefe.setTurnos(minijefe.getTurnos() + 1);
                 }
                 this.danioProvocado = minijefe.atacar(jugador, jugador.isDefendiendose(), false);
                 return false;
@@ -101,14 +99,14 @@ public class Combate {
         }
         switch (jefeFinal.getTipo()) {
             case "SATAN":
-                if ((jefeFinal.getVida() <= jefeFinal.getVidaMax() / 2) && etapaSinActivar) {
+                if ((jefeFinal.getVida() <= jefeFinal.getVidaMax() / 2) && !jefeFinal.isEtapaActivada()) {
                     System.out.println(jefeFinal.getNombre() + " se ha enfurecido... Busca atacarte con fuerza... ¡Cuidado!");
                     jefeFinal.setAtaque(jefeFinal.getAtaque() + 10);
                     jefeFinal.setProbabilidadCarga(60);
-                    etapaSinActivar = false;
+                    jefeFinal.setEtapaActivada(true);
                 }
-                if (turnos == 3) {
-                    turnos = 0;
+                if (jefeFinal.getTurnos() == 3) {
+                    jefeFinal.setTurnos(0);
                     System.out.println(jefeFinal.getNombre() + " lanza un ataque cargado!");
                     this.danioProvocado = jefeFinal.atacar(jugador, jugador.isDefendiendose(), true);
                     jefeFinal.setCarga(false);
@@ -122,24 +120,24 @@ public class Combate {
                 }
                 if (jefeFinal.puedeCargar() && rand.nextInt(100) < jefeFinal.getProbabilidadCarga()) {
                     jefeFinal.setCarga(true);
-                    turnos++;
+                    jefeFinal.setTurnos(jefeFinal.getTurnos() + 1);
                     return false;
                 }
                 this.danioProvocado = jefeFinal.atacar(jugador, jugador.isDefendiendose(), false);
-                turnos++;
+                jefeFinal.setTurnos(jefeFinal.getTurnos() + 1);
                 return false;
             case "TANQUE":
-                if ((jefeFinal.getVida() <= jefeFinal.getVidaMax() / 2) && etapaSinActivar) {
+                if ((jefeFinal.getVida() <= jefeFinal.getVidaMax() / 2) && !jefeFinal.isEtapaActivada()) {
                     System.out.println(jefeFinal.getNombre() + " se ha enfurecido... Busca atacarte con fuerza... ¡Cuidado!");
                     jefeFinal.setAtaque(jefeFinal.getAtaque() * 2);
-                    etapaSinActivar = false;
+                    jefeFinal.setEtapaActivada(true);
                 } else if ((jefeFinal.getVida() > jefeFinal.getVidaMax() / 2)) {
-                    if (turnos == 2) {
+                    if (jefeFinal.getTurnos() == 2) {
                         System.out.println(jefeFinal.getNombre() + " regenero " + (Math.min(10, (jefeFinal.getDefensaMax() - jefeFinal.getDefensa())) + " de escudo"));
                         jefeFinal.setDefensa(Math.min(jefeFinal.getDefensa() + 10, jefeFinal.getDefensaMax()));
-                        turnos = 0;
+                        jefeFinal.setTurnos(0);
                     } else {
-                        turnos++;
+                        jefeFinal.setTurnos(jefeFinal.getTurnos() + 1);
                     }
                 }
                 this.danioProvocado = jefeFinal.atacar(jugador, jugador.isDefendiendose(), false);

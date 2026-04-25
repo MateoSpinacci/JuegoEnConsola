@@ -3,6 +3,7 @@ package juego.model;
 public class FinalBoss extends Enemigo{
 
     private final String tipo;
+    private boolean etapaActivada = false;
 
     public FinalBoss(int dificultad, String nombre, int vida, int ataque, int defensa, boolean puedeCargar, int probabilidadCarga, String tipo) {
         super(dificultad, nombre, vida, ataque, defensa, puedeCargar, probabilidadCarga);
@@ -17,5 +18,11 @@ public class FinalBoss extends Enemigo{
         return tipo;
     }
 
+    public boolean isEtapaActivada() {
+        return etapaActivada;
+    }
 
+    public void setEtapaActivada(boolean etapaActivada) {
+        this.etapaActivada = etapaActivada;
+    }
 }

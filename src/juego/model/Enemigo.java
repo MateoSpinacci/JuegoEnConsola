@@ -12,6 +12,7 @@ public class Enemigo extends Entidad {
     private final boolean puedeCargar;
     private int probabilidadCarga;
     private boolean cargando;
+    private int turnos = 0;
 
     public Enemigo(int dificultad, String nombre, int vida, int ataque, int defensa, boolean puedeCargar, int probabilidadCarga) {
         super(nombre, vida, ataque, defensa);
@@ -80,6 +81,14 @@ public class Enemigo extends Entidad {
 
     public int getDificultadInt() {
         return dificultad;
+    }
+
+    public int getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(int turnos) {
+        this.turnos = turnos;
     }
 
     public String getDificultad() {
