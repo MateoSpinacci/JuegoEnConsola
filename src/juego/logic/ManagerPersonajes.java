@@ -18,7 +18,7 @@ public class ManagerPersonajes {
         jugadores.add(new Jugador("Tanque", 120, 12, 25));
         jugadores.add(new Jugador("Mago", 80, 30, 5));
         jugadores.add(new Jugador("Asesino", 90, 24, 8));
-        jugadores.add(new Jugador("Tester", 1000, 135, 1));
+        // jugadores.add(new Jugador("Tester", 1000, 135, 1)); Testear funcionalidades.
     }
 
     public List<Jugador> getJugadores() {
